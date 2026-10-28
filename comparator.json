@@ -1,0 +1,18 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "CorradiHajnalTheorem.corradi_hajnal",
+    "CorradiHajnalTheorem.corradi_hajnal_sets",
+    "CorradiHajnalTheorem.three_mul_le_card_of_hasDisjointCycles",
+    "CorradiHajnalTheorem.not_hasDisjointCycles_top",
+    "CorradiHajnalTheorem.not_hasDisjointCycles_completeBipartite"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}
