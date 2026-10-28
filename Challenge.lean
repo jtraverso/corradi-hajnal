@@ -51,6 +51,12 @@ def HasDisjointCycles {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
     (∀ i, (c i).IsCycle) ∧
       ∀ i j, i ≠ j → ∀ v, v ∈ (c i).support → v ∉ (c j).support
 
+/-- Adjacency in the complete bipartite graph is decidable (Mathlib has no such instance; needed
+to state its minimum degree). -/
+instance instDecidableRelCompleteBipartiteGraphAdj {α β : Type*} :
+    DecidableRel (completeBipartiteGraph α β).Adj := fun v w =>
+  inferInstanceAs (Decidable (v.isLeft ∧ w.isRight ∨ v.isRight ∧ w.isLeft))
+
 /-- **The Corrádi–Hajnal theorem.** A graph on at least `3k` vertices with minimum degree at least
 `2k` contains `k` vertex-disjoint cycles. -/
 theorem corradi_hajnal {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)

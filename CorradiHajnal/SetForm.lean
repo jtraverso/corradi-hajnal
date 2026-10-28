@@ -33,9 +33,7 @@ theorem exists_disjoint_not_isAcyclic_of_hasDisjointCycles {V : Type*} {G : Simp
       ∀ i, ¬ (G.induce (S i)).IsAcyclic := by
   obtain ⟨base, c, hc, hd⟩ := h
   refine ⟨fun i => {v | v ∈ (c i).support}, fun i j hij => ?_, fun i hac => ?_⟩
-  · rw [Set.disjoint_left]
-    intro v hv hv'
-    exact hd i j hij v hv hv'
+  · exact Set.disjoint_left.2 fun v hv hv' => hd i j hij v hv hv'
   · have hw : ∀ x ∈ (c i).support, x ∈ {v | v ∈ (c i).support} := fun x hx => hx
     have h1 : (((c i).induce {v | v ∈ (c i).support} hw).map
         (Embedding.induce {v | v ∈ (c i).support}).toHom).IsCycle := by

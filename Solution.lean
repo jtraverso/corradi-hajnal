@@ -42,22 +42,28 @@ def HasDisjointCycles {V : Type*} (G : SimpleGraph V) (k : ℕ) : Prop :=
     (∀ i, (c i).IsCycle) ∧
       ∀ i j, i ≠ j → ∀ v, v ∈ (c i).support → v ∉ (c j).support
 
+/-- Adjacency in the complete bipartite graph is decidable (Mathlib has no such instance; needed
+to state its minimum degree). -/
+instance instDecidableRelCompleteBipartiteGraphAdj {α β : Type*} :
+    DecidableRel (completeBipartiteGraph α β).Adj := fun v w =>
+  inferInstanceAs (Decidable (v.isLeft ∧ w.isRight ∨ v.isRight ∧ w.isLeft))
+
 /-- **The Corrádi–Hajnal theorem.** A graph on at least `3k` vertices with minimum degree at least
 `2k` contains `k` vertex-disjoint cycles. -/
 theorem corradi_hajnal {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
     [DecidableRel G.Adj] (k : ℕ) (hn : 3 * k ≤ Fintype.card V) (hδ : 2 * k ≤ G.minDegree) :
-    HasDisjointCycles G k :=
+    HasDisjointCycles G k := 
   CorradiHajnal.corradi_hajnal G k hn hδ
 
 /-- **The Corrádi–Hajnal theorem**, with the disjoint cycles of the Erdős–Pósa entry. -/
 theorem corradi_hajnal_sets {V : Type*} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
     [DecidableRel G.Adj] (k : ℕ) (hn : 3 * k ≤ Fintype.card V) (hδ : 2 * k ≤ G.minDegree) :
-    CyclePacking.HasDisjointCycles G k :=
+    CyclePacking.HasDisjointCycles G k := 
   CorradiHajnal.corradi_hajnal_sets G k hn hδ
 
 /-- A graph with `k` disjoint cycles has at least `3k` vertices. -/
 theorem three_mul_le_card_of_hasDisjointCycles {V : Type*} [Fintype V] {G : SimpleGraph V}
-    {k : ℕ} (h : HasDisjointCycles G k) : 3 * k ≤ Fintype.card V :=
+    {k : ℕ} (h : HasDisjointCycles G k) : 3 * k ≤ Fintype.card V := 
   CorradiHajnal.three_mul_le_card_of_hasDisjointCycles h
 
 /-- **Sharpness of the order condition.** For `k ≥ 2`, the complete graph on `3k - 1` vertices
@@ -66,7 +72,7 @@ theorem not_hasDisjointCycles_top (k : ℕ) (hk : 2 ≤ k) :
     Fintype.card (Fin (3 * k - 1)) = 3 * k - 1 ∧
       (⊤ : SimpleGraph (Fin (3 * k - 1))).minDegree = 3 * k - 2 ∧
       2 * k ≤ (⊤ : SimpleGraph (Fin (3 * k - 1))).minDegree ∧
-      ¬ HasDisjointCycles (⊤ : SimpleGraph (Fin (3 * k - 1))) k :=
+      ¬ HasDisjointCycles (⊤ : SimpleGraph (Fin (3 * k - 1))) k := 
   CorradiHajnal.not_hasDisjointCycles_top k hk
 
 /-- **Sharpness of the degree condition.** For `k ≥ 1` and `m ≥ 2k`, the complete bipartite
@@ -75,7 +81,7 @@ disjoint cycles. -/
 theorem not_hasDisjointCycles_completeBipartite (k m : ℕ) (hk : 1 ≤ k) (hm : 2 * k ≤ m) :
     3 * k ≤ Fintype.card (Fin (2 * k - 1) ⊕ Fin m) ∧
       (completeBipartiteGraph (Fin (2 * k - 1)) (Fin m)).minDegree = 2 * k - 1 ∧
-      ¬ HasDisjointCycles (completeBipartiteGraph (Fin (2 * k - 1)) (Fin m)) k :=
+      ¬ HasDisjointCycles (completeBipartiteGraph (Fin (2 * k - 1)) (Fin m)) k := 
   CorradiHajnal.not_hasDisjointCycles_completeBipartite k m hk hm
 
 end CorradiHajnalTheorem
